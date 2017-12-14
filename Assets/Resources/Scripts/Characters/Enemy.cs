@@ -2,13 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterBase : MonoBehaviour {
-
-    private Entity entity;
-
-    public CharacterBase(Entity entity) {
-        this.entity = entity;
-    }
+public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

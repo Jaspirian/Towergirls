@@ -60,10 +60,10 @@ public class Battle : MonoBehaviour {
     {
         Dictionary<int[], Entity> temp = new Dictionary<int[], Entity>();
         //THIS IS PLACEHOLDER STUFF
-        temp.Add(new int[] { 0, 1, 1 }, new Entity("Sir Knight", null, true, new Stats(150, 6, 2, 3, 1, 1)));
-        temp.Add(new int[] { 1, 0, 0 }, new Entity("Bandit Male", null, false, new Stats(100, 4, 1, 2, 0, 1)));
-        temp.Add(new int[] { 1, 1, 1 }, new Entity("Bandit Spike", null, false, new Stats(100, 4, 1, 2, 0, 1)));
-        temp.Add(new int[] { 1, 0, 2 }, new Entity("Bandit Female", null, false, new Stats(100, 4, 1, 2, 0, 1)));
+        temp.add(new int[] { 0, 1, 1 }, new entity("sir knight", null, true, new stats(150, 6, 2, 3, 1, 1)));
+        temp.add(new int[] { 1, 0, 0 }, new entity("bandit male", null, false, new stats(100, 4, 1, 2, 0, 1)));
+        temp.add(new int[] { 1, 1, 1 }, new entity("bandit spike", null, false, new stats(100, 4, 1, 2, 0, 1)));
+        temp.add(new int[] { 1, 0, 2 }, new entity("bandit female", null, false, new stats(100, 4, 1, 2, 0, 1)));
         //
         return temp;
     }
