@@ -107,7 +107,8 @@ public class Battle : MonoBehaviour {
         GameObject.Find("Canvas/Bottom/Character/Avatar").GetComponent<Image>().sprite = currentFighter.entity.sprite;
         GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().text = currentFighter.entity.title;
         GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = Color.black;
-        if(currentFighter.entity.color != null) GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = currentFighter.entity.color;
+        Debug.Log(currentFighter.entity.color);
+        //if(currentFighter.entity.color != null) GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = currentFighter.entity.color;
     }
 
     private void enemyTurn(Battler currentFighter)
