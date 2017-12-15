@@ -28,7 +28,7 @@ public class Stat {
     {
         int val = initialValue;
         val += added;
-        val = (int)(val * modded);
+        if(modded != 0) val = (int)(val * modded);
         return val;
     }
 }

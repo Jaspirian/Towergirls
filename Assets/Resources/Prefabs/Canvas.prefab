@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 114060740219945876}
   - component: {fileID: 114736807226116710}
   m_Layer: 5
-  m_Name: Spell
+  m_Name: Spells
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 114613923398925566}
   - component: {fileID: 114100114823087372}
   m_Layer: 5
-  m_Name: Lust
+  m_Name: Items
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,7 +1017,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 114558680152598588}
   m_OnClick:
     m_PersistentCalls:
@@ -1970,7 +1970,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: L<color="blue">u</color>st
+  m_Text: <color="blue">I</color>tems
 --- !u!114 &114784618244272944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2337,7 +2337,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: S<color="blue">p</color>ell
+  m_Text: S<color="blue">p</color>ells
 --- !u!114 &114967961577733726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3350,7 +3350,7 @@ RectTransform:
   m_GameObject: {fileID: 1007298534930758}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.00004196167, y: 11.975014, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224547186208057964}
   m_RootOrder: 0

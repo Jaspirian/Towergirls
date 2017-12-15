@@ -13,6 +13,8 @@ public class Battle : MonoBehaviour {
     public GameObject triangle;
 
     public Card card;
+    public GameObject dialogueLayout;
+    public GameObject fightLayout;
 
     public enum BattleStates
     {
@@ -33,17 +35,22 @@ public class Battle : MonoBehaviour {
         currentFighters = getFighters();
         currentFighters.Sort(delegate (Battler a, Battler b)
         {
-            return a.entity.stats.speed.getCurrent().CompareTo(b.entity.stats.speed.getCurrent());
+            int speedA = a.entity.stats.speed.getCurrent();
+            int speedB = b.entity.stats.speed.getCurrent();
+            if (speedA > speedB) return -1;
+            if (speedA < speedB) return 1;
+            return 0;
         });
         displayHeads(currentFighters);
         foreach (Battler battler in currentFighters)
         {
-            battler.show();
+            battler.show(card);
         }
         triangle.SetActive(true);
         moveTriangle(currentFighters[0]);
         updateSelected(currentFighters[0]);
-        card.updateCard(currentFighters[0].entity);
+        card.selected = currentFighters[0].entity;
+        card.Reset();
     }
 
     // Update is called once per frame
@@ -58,7 +65,7 @@ public class Battle : MonoBehaviour {
             }
         } else if (currentState == BattleStates.PLAYERCHOICE)
         {
-            //updateUI(currentFighters[0]);
+            showChoices(currentFighters[0]);
         } else if (currentState == BattleStates.ENEMYCHOICE)
         {
             enemyTurn(currentFighters[0]);
@@ -112,8 +119,18 @@ public class Battle : MonoBehaviour {
     {
         GameObject.Find("Canvas/Bottom/Character/Avatar").GetComponent<Image>().sprite = currentFighter.entity.sprite;
         GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().text = currentFighter.entity.title;
-        GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = Color.black;
-        if (currentFighter.entity.color != null) GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = currentFighter.entity.color;
+        GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = currentFighter.entity.color;
+    }
+
+    private void showChoices(Battler currentFighter)
+    {
+        dialogueLayout.SetActive(false);
+        fightLayout.SetActive(true);
+        fightLayout.transform.Find("Buttons/Melee").GetComponent<Button>().interactable = true;
+        if(currentFighter.entity.spells != null && currentFighter.entity.spells.Count != 0) fightLayout.transform.Find("Buttons/Spells").GetComponent<Button>().interactable = true;
+        else fightLayout.transform.Find("Buttons/Spells").GetComponent<Button>().interactable = false;
+        if (currentFighter.entity.items != null && currentFighter.entity.items.Count != 0) fightLayout.transform.Find("Buttons/Items").GetComponent<Button>().interactable = true;
+        else fightLayout.transform.Find("Buttons/Items").GetComponent<Button>().interactable = false;
     }
 
     private void enemyTurn(Battler currentFighter)

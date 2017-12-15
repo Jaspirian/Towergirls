@@ -22,10 +22,13 @@ public class Battler {
         battleBase = GameObject.Find(folderLoc + "Base");
     }
 
-    public void show()
+    public void show(Card card)
     {
         battleSprite.SetActive(true);
         battleSprite.GetComponent<SpriteRenderer>().sprite = entity.sprite;
         healthBar.SetActive(true);
+        hoverUpdateCard hover = battleBase.AddComponent<hoverUpdateCard>();
+        hover.card = card;
+        hover.entity = entity;
     }
 }

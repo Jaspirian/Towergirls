@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Card : MonoBehaviour {
-    
+
+    public Entity selected;
+
     public Image avatar;
     public Text kingdom;
     public Text title;
@@ -20,6 +22,11 @@ public class Card : MonoBehaviour {
 
     }
 
+    public void Reset()
+    {
+        updateCard(selected);
+    }
+
     public void updateCard(Entity e)
     {
         avatar.sprite = e.sprite;
@@ -32,16 +39,13 @@ public class Card : MonoBehaviour {
         if (e.attributes != null)
         {
             attributes.enabled = true;
-            for (int i = 0; i < 5; i++)
+            foreach (Judgment attr in e.attributes)
             {
-                if (i < e.attributes.Length)
-                {
-                    if (attributesNew != "") attributesNew += "\n";
-                    if (e.attributes[i].isPositive) attributesNew += "+";
-                    else attributesNew += "-";
-                    attributesNew += " ";
-                    attributesNew += e.attributes[i].description;
-                }
+                if (attributesNew != "") attributesNew += "\n";
+                if (attr.isPositive) attributesNew += "+";
+                else attributesNew += "-";
+                attributesNew += " ";
+                attributesNew += attr.description;
             }
             attributes.text = attributesNew;
         }
@@ -49,10 +53,10 @@ public class Card : MonoBehaviour {
         {
             attributes.enabled = false;
         }
-
+        
         for (int i = 0; i < 3; i++)
         {
-            if (e.items != null && i < e.items.Length)
+            if (e.items != null && i < e.items.Count)
             {
                 itemImages[i].enabled = true;
                 itemTexts[i].enabled = true;
@@ -68,7 +72,7 @@ public class Card : MonoBehaviour {
 
         for (int i = 0; i < 3; i++)
         {
-            if (e.preferences != null && i < e.preferences.Length)
+            if (e.preferences != null && i < e.preferences.Count)
             {
                 preferenceImages[i].enabled = true;
                 preferenceTexts[i].enabled = true;

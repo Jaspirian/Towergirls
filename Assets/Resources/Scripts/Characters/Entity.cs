@@ -10,11 +10,11 @@ public class Entity {
     public Color color = Color.black;
     public Sprite sprite;
     public string kingdom = "";
-    public Judgment[] attributes;
+    public List<Judgment> attributes;
     public string mainStat;
-    public Item[] items;
-    public Spell[] spells;
-    public Judgment[] preferences;
+    public List<Item> items;
+    public List<Spell> spells;
+    public List<Judgment> preferences;
     public string description = "";
 
     public Stats stats;

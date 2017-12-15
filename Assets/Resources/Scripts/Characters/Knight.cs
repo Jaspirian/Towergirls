@@ -26,26 +26,25 @@ public class Knight : Entity {
         //1
         kingdom = cells[2];
         //2
-        attributes = new Judgment[5];
-        for (int i = 0; i < attributes.Length; i++)
+        attributes = new List<Judgment>();
+        for (int i = 0; i < 5; i++)
         {
             if (string.IsNullOrEmpty(cells[3 + (i * 2)])) break;
-            attributes[i] = new Judgment(bool.Parse(cells[3 + (i * 2)]), cells[4 + (i * 2)]);
-
+            attributes.Add(new Judgment(bool.Parse(cells[3 + (i * 2)]), cells[4 + (i * 2)]));
         }
         //12
-        items = new Item[3];
-        for (int i = 0; i < items.Length; i++)
+        items = new List<Item>();
+        for (int i = 0; i < 3; i++)
         {
             if (string.IsNullOrEmpty(cells[13 + (i * 2)])) break;
-            items[i] = new Item(cells[13 + (i * 2)], cells[14 + (i * 2)]);
+            items.Add(new Item(cells[13 + (i * 2)], cells[14 + (i * 2)]));
         }
         //18
-        preferences = new Judgment[3];
-        for (int i = 0; i < preferences.Length; i++)
+        preferences = new List<Judgment>();
+        for (int i = 0; i < 3; i++)
         {
             if (string.IsNullOrEmpty(cells[19 + (i * 2)])) break;
-            preferences[i] = new Judgment(bool.Parse(cells[19 + (i * 2)]), cells[20 + (i * 2)]);
+            preferences.Add(new Judgment(bool.Parse(cells[19 + (i * 2)]), cells[20 + (i * 2)]));
         }
         //24
         description = cells[25];
