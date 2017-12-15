@@ -50,3 +50,6 @@ TagManager:
   - name: Sprites
     uniqueID: 258205445
     locked: 0
+  - name: Overlay
+    uniqueID: 2196091195
+    locked: 0

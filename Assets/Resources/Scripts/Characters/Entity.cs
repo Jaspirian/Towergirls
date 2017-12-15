@@ -5,6 +5,7 @@ using UnityEngine;
 public class Entity {
 
     public string title;
+    public Color color;
     public Sprite sprite;
     public bool isPlayerControlled;
 

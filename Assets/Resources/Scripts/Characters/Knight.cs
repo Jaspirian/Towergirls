@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Knight : Entity {
-
-    public Color color;
+    
     public string kingdom;
     public Judgment[] proCons;
     public string mainStat;
