@@ -5,9 +5,17 @@ using UnityEngine;
 public class Entity {
 
     public string title;
-    public Color color;
-    public Sprite sprite;
     public bool isPlayerControlled;
+
+    public Color color = Color.black;
+    public Sprite sprite;
+    public string kingdom = "";
+    public Judgment[] attributes;
+    public string mainStat;
+    public Item[] items;
+    public Spell[] spells;
+    public Judgment[] preferences;
+    public string description = "";
 
     public Stats stats;
 

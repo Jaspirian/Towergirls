@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Princess : Entity {
-    
-    public string kingdom;
-    public Judgment[] proCons;
-    public string mainStat;
-    public Item[] items;
-    public Spell[] spells;
-    public Judgment[] likes;
-    public string description;
 
 	public Princess(string title, bool isPlayerControlled) : base(title, isPlayerControlled)
     {
@@ -39,10 +31,10 @@ public class Princess : Entity {
         //1
         kingdom = cells[2];
         //2
-        proCons = new Judgment[5];
-        for (int i = 0; i < proCons.Length; i++)
+        attributes = new Judgment[5];
+        for (int i = 0; i < attributes.Length; i++)
         {
-            proCons[i] = new Judgment(bool.Parse(cells[3 + (i * 2)]), cells[4 + (i * 2)]);
+            attributes[i] = new Judgment(bool.Parse(cells[3 + (i * 2)]), cells[4 + (i * 2)]);
 
         }
         //12
@@ -52,10 +44,10 @@ public class Princess : Entity {
             items[i] = new Item(cells[13 + (i * 2)], cells[14 + (i * 2)]);
         }
         //16
-        likes = new Judgment[3];
-        for (int i = 0; i < likes.Length; i++)
+        preferences = new Judgment[3];
+        for (int i = 0; i < preferences.Length; i++)
         {
-            likes[i] = new Judgment(bool.Parse(cells[17 + (i * 2)]), cells[18 + (i * 2)]);
+            preferences[i] = new Judgment(bool.Parse(cells[17 + (i * 2)]), cells[18 + (i * 2)]);
         }
         //22
         description = cells[23];

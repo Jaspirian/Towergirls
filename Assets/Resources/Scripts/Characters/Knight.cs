@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Knight : Entity {
-    
-    public string kingdom;
-    public Judgment[] proCons;
-    public string mainStat;
-    public Item[] items;
-    public Spell[] spells;
-    public Judgment[] likes;
-    public string description;
 
     public Knight(string title, bool isPlayerControlled) : base(title, isPlayerControlled)
     {
@@ -30,15 +22,15 @@ public class Knight : Entity {
         string[] cells = rightLine.Split('\t');
 
         //0
-        color = new Color(int.Parse(cells[1].Split(',')[0]), int.Parse(cells[1].Split(',')[1]), int.Parse(cells[1].Split(',')[2]));
+        color = new Color(float.Parse(cells[1].Split(',')[0]) / 255, float.Parse(cells[1].Split(',')[1]) / 255, float.Parse(cells[1].Split(',')[2]) / 255);
         //1
         kingdom = cells[2];
         //2
-        proCons = new Judgment[5];
-        for (int i = 0; i < proCons.Length; i++)
+        attributes = new Judgment[5];
+        for (int i = 0; i < attributes.Length; i++)
         {
             if (string.IsNullOrEmpty(cells[3 + (i * 2)])) break;
-            proCons[i] = new Judgment(bool.Parse(cells[3 + (i * 2)]), cells[4 + (i * 2)]);
+            attributes[i] = new Judgment(bool.Parse(cells[3 + (i * 2)]), cells[4 + (i * 2)]);
 
         }
         //12
@@ -49,11 +41,11 @@ public class Knight : Entity {
             items[i] = new Item(cells[13 + (i * 2)], cells[14 + (i * 2)]);
         }
         //18
-        likes = new Judgment[3];
-        for (int i = 0; i < likes.Length; i++)
+        preferences = new Judgment[3];
+        for (int i = 0; i < preferences.Length; i++)
         {
             if (string.IsNullOrEmpty(cells[19 + (i * 2)])) break;
-            likes[i] = new Judgment(bool.Parse(cells[19 + (i * 2)]), cells[20 + (i * 2)]);
+            preferences[i] = new Judgment(bool.Parse(cells[19 + (i * 2)]), cells[20 + (i * 2)]);
         }
         //24
         description = cells[25];

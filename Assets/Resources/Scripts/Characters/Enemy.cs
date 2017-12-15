@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Enemy : Entity {
 
-    public Color color;
-    public string kingdom;
-    public string mainStat;
-    public Spell[] spells;
-    public string description;
-
     public Enemy(string title, bool isPlayerControlled) : base(title, isPlayerControlled)
     {
         TextAsset csv = Resources.Load("Spreadsheets/Enemies") as TextAsset;
@@ -28,7 +22,7 @@ public class Enemy : Entity {
         string[] cells = rightLine.Split('\t');
 
         //0
-        color = new Color(int.Parse(cells[1].Split(',')[0]), int.Parse(cells[1].Split(',')[1]), int.Parse(cells[1].Split(',')[2]));
+        color = new Color(float.Parse(cells[1].Split(',')[0]) / 255, float.Parse(cells[1].Split(',')[1]) / 255, float.Parse(cells[1].Split(',')[2]) / 255);
         //1
         kingdom = cells[2];
         //2

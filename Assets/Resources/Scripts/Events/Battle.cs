@@ -12,6 +12,8 @@ public class Battle : MonoBehaviour {
 
     public GameObject triangle;
 
+    public Card card;
+
     public enum BattleStates
     {
         START,
@@ -24,6 +26,8 @@ public class Battle : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        card = GameObject.Find("Canvas/Right/Card").GetComponent<Card>();
+
         currentState = BattleStates.START;
         initialFighters = getFighters();
         currentFighters = getFighters();
@@ -38,6 +42,8 @@ public class Battle : MonoBehaviour {
         }
         triangle.SetActive(true);
         moveTriangle(currentFighters[0]);
+        updateSelected(currentFighters[0]);
+        card.updateCard(currentFighters[0].entity);
     }
 
     // Update is called once per frame
@@ -52,7 +58,7 @@ public class Battle : MonoBehaviour {
             }
         } else if (currentState == BattleStates.PLAYERCHOICE)
         {
-            updateUI(currentFighters[0]);
+            //updateUI(currentFighters[0]);
         } else if (currentState == BattleStates.ENEMYCHOICE)
         {
             enemyTurn(currentFighters[0]);
@@ -102,13 +108,12 @@ public class Battle : MonoBehaviour {
         triangle.transform.position = new Vector3(spriteLoc.x + xOffset, spriteLoc.y + yOffset, triangle.transform.position.z);
     }
 
-    private void updateUI(Battler currentFighter)
+    private void updateSelected(Battler currentFighter)
     {
         GameObject.Find("Canvas/Bottom/Character/Avatar").GetComponent<Image>().sprite = currentFighter.entity.sprite;
         GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().text = currentFighter.entity.title;
         GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = Color.black;
-        Debug.Log(currentFighter.entity.color);
-        //if(currentFighter.entity.color != null) GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = currentFighter.entity.color;
+        if (currentFighter.entity.color != null) GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = currentFighter.entity.color;
     }
 
     private void enemyTurn(Battler currentFighter)
