@@ -8,7 +8,6 @@ public class Princess : Entity {
     public string kingdom;
     public Judgment[] proCons;
     public string mainStat;
-    public Stats stats;
     public Item[] items;
     public Spell[] spells;
     public Judgment[] likes;

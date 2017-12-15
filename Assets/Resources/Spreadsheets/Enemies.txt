@@ -1,0 +1,4 @@
+Name	Color	Kingdom	Description	Main stat	Love	Lust	Wealth	Power	HP	Speed	Attack	Defense	Spell	Effect	AoE	Fixed center	Duration	Base power	Cost
+Bandit Female	126,103,93	Nefarious Skulker	A roguish blackguard more concerned with money than sense, honor or good grooming. She sees others as a means to an end, that end being a pool of coins so big she can swim in it.	Power	0	0	0	0	60	3	20	10							
+Bandit Spike	126,103,93	Nefarious Skulker	A roguish blackguard more concerned with money than sense, honor or good grooming. He sees others as a means to an end, that end being a pool of coins so big he can swim in it.	Wealth	0	0	0	0	70	3	20	10							
+Bandit Male	126,103,93	Nefarious Skulker	A roguish blackguard more concerned with money than sense, honor or good grooming. He sees others as a means to an end, that end being a pool of coins so big he can swim in it.	Lust	0	0	0	0	40	3	20	10							

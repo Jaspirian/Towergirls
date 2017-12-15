@@ -8,8 +8,12 @@ public class Entity {
     public Sprite sprite;
     public bool isPlayerControlled;
 
+    public Stats stats;
+
 	public Entity(string title, bool isPlayerControlled)
     {
+        sprite = Resources.Load<Sprite>("Sprites/Characters/" + title);
+
         this.title = title;
         this.isPlayerControlled = isPlayerControlled;
     }
