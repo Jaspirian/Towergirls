@@ -51,31 +51,13 @@ public class Battle : MonoBehaviour {
         updateSelected(currentFighters[0]);
         card.selected = currentFighters[0].entity;
         card.Reset();
+
+        if (currentFighters[0].entity.isPlayerControlled) playerTurn(currentFighters[0]);
+        else enemyTurn(currentFighters[0]);
     }
 
     // Update is called once per frame
     void Update() {
-
-        if (currentState == BattleStates.START)
-        {
-            if (currentFighters[0].entity.isPlayerControlled) {
-                currentState = BattleStates.PLAYERCHOICE;
-            } else {
-                currentState = BattleStates.ENEMYCHOICE;
-            }
-        } else if (currentState == BattleStates.PLAYERCHOICE)
-        {
-            showChoices(currentFighters[0]);
-        } else if (currentState == BattleStates.ENEMYCHOICE)
-        {
-            enemyTurn(currentFighters[0]);
-        } else if (currentState == BattleStates.WIN)
-        {
-            playWin();
-        } else
-        {
-            playLoss();
-        }
     }
 
     private List<Battler> getFighters()
@@ -122,15 +104,21 @@ public class Battle : MonoBehaviour {
         GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = currentFighter.entity.color;
     }
 
+    private void playerTurn(Battler battler)
+    {
+        showChoices(battler);
+
+    }
+
     private void showChoices(Battler currentFighter)
     {
         dialogueLayout.SetActive(false);
         fightLayout.SetActive(true);
-        fightLayout.transform.Find("Buttons/Melee").GetComponent<Button>().interactable = true;
-        if(currentFighter.entity.spells != null && currentFighter.entity.spells.Count != 0) fightLayout.transform.Find("Buttons/Spells").GetComponent<Button>().interactable = true;
-        else fightLayout.transform.Find("Buttons/Spells").GetComponent<Button>().interactable = false;
-        if (currentFighter.entity.items != null && currentFighter.entity.items.Count != 0) fightLayout.transform.Find("Buttons/Items").GetComponent<Button>().interactable = true;
-        else fightLayout.transform.Find("Buttons/Items").GetComponent<Button>().interactable = false;
+        fightLayout.transform.Find("Buttons/Melee").GetComponent<Toggle>().interactable = true;
+        if(currentFighter.entity.spells != null && currentFighter.entity.spells.Count != 0) fightLayout.transform.Find("Buttons/Spells").GetComponent<Toggle>().interactable = true;
+        else fightLayout.transform.Find("Buttons/Spells").GetComponent<Toggle>().interactable = false;
+        if (currentFighter.entity.items != null && currentFighter.entity.items.Count != 0) fightLayout.transform.Find("Buttons/Items").GetComponent<Toggle>().interactable = true;
+        else fightLayout.transform.Find("Buttons/Items").GetComponent<Toggle>().interactable = false;
     }
 
     private void enemyTurn(Battler currentFighter)
