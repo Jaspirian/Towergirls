@@ -16,21 +16,14 @@ public class Battle : MonoBehaviour {
     public GameObject dialogueLayout;
     public GameObject fightLayout;
 
-    public enum BattleStates
-    {
-        START,
-        PLAYERCHOICE,
-        ENEMYCHOICE,
-        WIN,
-        LOSE
-    }
-    public BattleStates currentState;
+    public Toggle melee;
+    public Toggle spells;
+    public Toggle items;
 
     // Use this for initialization
     void Start() {
         card = GameObject.Find("Canvas/Right/Card").GetComponent<Card>();
-
-        currentState = BattleStates.START;
+        
         initialFighters = getFighters();
         currentFighters = getFighters();
         currentFighters.Sort(delegate (Battler a, Battler b)
@@ -136,6 +129,7 @@ public class Battle : MonoBehaviour {
 
     }
 
+
     private void nextTurn()
     {
         Battler justWent = currentFighters[0];
@@ -143,5 +137,39 @@ public class Battle : MonoBehaviour {
         currentFighters.Add(justWent);
 
         displayHeads(currentFighters);
+    }
+
+    public void clicked(Battler battler)
+    {
+        if (battler == null) return;
+        if (melee.isOn)
+        {
+            attack(currentFighters[0].entity, battler);
+        }
+        else if (spells.isOn)
+        {
+
+        }
+        else if (items.isOn)
+        {
+
+        }
+    }
+
+    public void attack(Entity attacker, Battler defender)
+    {
+        int damage = attacker.stats.attack.getCurrent();
+        damage = (int)(damage * (defender.entity.stats.defense.getCurrent() / 100));
+        defender.entity.stats.health.add(-damage);
+        if (defender.entity.stats.health.getCurrent() <= 0)
+        {
+            death(defender);
+        }
+        defender.updateHealthbar();
+    }
+
+    public void death(Battler dying)
+    {
+
     }
 }

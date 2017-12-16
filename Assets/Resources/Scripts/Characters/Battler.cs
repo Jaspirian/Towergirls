@@ -31,4 +31,9 @@ public class Battler {
         hover.card = card;
         hover.entity = entity;
     }
+
+    public void updateHealthbar()
+    {
+
+    }
 }

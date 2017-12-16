@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class hoverColor : MonoBehaviour {
 
     public Color normalColor;
     public Color changeColor;
-    private SpriteRenderer mesher;
 
 	// Use this for initialization
 	void Start () {
-        mesher = GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -20,11 +19,17 @@ public class hoverColor : MonoBehaviour {
 
     void OnMouseEnter()
     {
-        mesher.material.color = changeColor;
+        Debug.Log("hi");
+        GetComponent<Image>().color = changeColor;
     }
 
     void OnMouseExit()
     {
-        mesher.material.color = normalColor;
+        GetComponent<Image>().color = normalColor;
+    }
+
+    private void OnMouseUpAsButton()
+    {
+        Debug.Log("clicked");
     }
 }

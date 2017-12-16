@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class toggle : MonoBehaviour {
-
+public class toggle : MonoBehaviour
+{
     public Toggle button;
     public Color defaultColor;
     public Color defaultHighlight;
@@ -13,8 +13,9 @@ public class toggle : MonoBehaviour {
     public Color selectedHighlight;
     public Color selectedPressed;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         button.onValueChanged.AddListener(toggleListener);
         ColorBlock cb = button.colors;
         cb.normalColor = defaultColor;
@@ -22,16 +23,17 @@ public class toggle : MonoBehaviour {
         cb.pressedColor = selectedPressed;
         button.colors = cb;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     private void toggleListener(bool isOn)
     {
         ColorBlock cb = button.colors;
-        if(isOn)
+        if (isOn)
         {
             cb.normalColor = selectedColor;
             cb.highlightedColor = selectedHighlight;
