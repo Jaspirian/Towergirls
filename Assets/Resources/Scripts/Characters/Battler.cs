@@ -7,33 +7,23 @@ public class Battler {
     public Entity entity;
     public Vector3 location;
 
-    public GameObject battleSprite;
-    public GameObject healthBar;
-    public GameObject battleBase;
-
 	public Battler(Entity entity, Vector3 location)
     {
         this.entity = entity;
         this.location = location;
-
-        string folderLoc = "/Battle/Bases/" + location.x + "/" + location.y + "/" + location.z + "/";
-        battleSprite = GameObject.Find(folderLoc + "BattleSprite");
-        healthBar = GameObject.Find(folderLoc + "Healthbar");
-        battleBase = GameObject.Find(folderLoc + "Base");
     }
 
-    public void show(Card card)
+    public List<Battler> SortBySpeed(List<Battler> list)
     {
-        battleSprite.SetActive(true);
-        battleSprite.GetComponent<SpriteRenderer>().sprite = entity.sprite;
-        healthBar.SetActive(true);
-        hoverUpdateCard hover = battleBase.AddComponent<hoverUpdateCard>();
-        hover.card = card;
-        hover.entity = entity;
-    }
+        list.Sort(delegate (Battler a, Battler b)
+        {
+            int speedA = a.entity.stats.speed.getCurrent();
+            int speedB = b.entity.stats.speed.getCurrent();
+            if (speedA > speedB) return -1;
+            if (speedA < speedB) return 1;
+            return 0;
+        });
 
-    public void updateHealthbar()
-    {
-
+        return list;
     }
 }

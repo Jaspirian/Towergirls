@@ -12,7 +12,9 @@ public class Battle : MonoBehaviour {
 
     public GameObject triangle;
 
-    public Card card;
+    private Card card;
+    private Order order;
+    private Cells cells;
     public GameObject dialogueLayout;
     public GameObject fightLayout;
 
@@ -23,30 +25,22 @@ public class Battle : MonoBehaviour {
     // Use this for initialization
     void Start() {
         card = GameObject.Find("Canvas/Right/Card").GetComponent<Card>();
+        order = GameObject.Find("Canvas/Battle/Order").GetComponent<Order>();
+        cells = GameObject.Find("Canvas/Battle/Cells").GetComponent<Cells>();
         
         initialFighters = getFighters();
         currentFighters = getFighters();
-        currentFighters.Sort(delegate (Battler a, Battler b)
-        {
-            int speedA = a.entity.stats.speed.getCurrent();
-            int speedB = b.entity.stats.speed.getCurrent();
-            if (speedA > speedB) return -1;
-            if (speedA < speedB) return 1;
-            return 0;
-        });
-        displayHeads(currentFighters);
-        foreach (Battler battler in currentFighters)
-        {
-            battler.show(card);
-        }
+        currentFighters = currentFighters[0].SortBySpeed(currentFighters);
+        order.setOrder(currentFighters);
+        cells.ShowSprites(currentFighters);
         triangle.SetActive(true);
         moveTriangle(currentFighters[0]);
-        updateSelected(currentFighters[0]);
-        card.selected = currentFighters[0].entity;
-        card.Reset();
+        //updateSelected(currentFighters[0]);
+        //card.selected = currentFighters[0].entity;
+        //card.Reset();
 
-        if (currentFighters[0].entity.isPlayerControlled) playerTurn(currentFighters[0]);
-        else enemyTurn(currentFighters[0]);
+        //if (currentFighters[0].entity.isPlayerControlled) playerTurn(currentFighters[0]);
+        //else enemyTurn(currentFighters[0]);
     }
 
     // Update is called once per frame
@@ -84,10 +78,12 @@ public class Battle : MonoBehaviour {
 
     private void moveTriangle(Battler currentFighter)
     {
-        Vector3 spriteLoc = currentFighter.battleSprite.transform.position;
-        int xOffset = 0;
-        int yOffset = 1;
-        triangle.transform.position = new Vector3(spriteLoc.x + xOffset, spriteLoc.y + yOffset, triangle.transform.position.z);
+        RectTransform transform = cells.cells[currentFighter.location].cellSprite.GetComponent<RectTransform>();
+        Vector3 location = transform.position;
+        float xOffset = transform.rect.width / 1.5f;
+        float yOffset = transform.rect.height / 2.5f;
+        Vector3 triangleLoc = triangle.GetComponent<RectTransform>().localPosition;
+        triangle.GetComponent<RectTransform>().localPosition = new Vector3(-location.x + xOffset, location.y + yOffset, triangleLoc.z);
     }
 
     private void updateSelected(Battler currentFighter)
@@ -165,7 +161,6 @@ public class Battle : MonoBehaviour {
         {
             death(defender);
         }
-        defender.updateHealthbar();
     }
 
     public void death(Battler dying)

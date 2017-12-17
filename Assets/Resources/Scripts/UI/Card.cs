@@ -24,11 +24,13 @@ public class Card : MonoBehaviour {
 
     public void Reset()
     {
-        updateCard(selected);
+        UpdateCard(selected);
     }
 
-    public void updateCard(Entity e)
+    public void UpdateCard(Entity e)
     {
+        if (e == null) return;
+
         avatar.sprite = e.sprite;
         kingdom.text = e.kingdom;
         kingdom.color = e.color;
