@@ -17,6 +17,8 @@ public class Cell : MonoBehaviour {
 
     public GameObject cellSprite;
 
+    public GameObject triangle;
+
 	// Use this for initialization
 	void Start () {
 
@@ -36,7 +38,7 @@ public class Cell : MonoBehaviour {
 
     public void SetSelected(bool selected)
     {
-
+        triangle.SetActive(selected);
     }
 
     public void SetEntity(Entity entity)

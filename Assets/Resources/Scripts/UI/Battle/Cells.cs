@@ -40,4 +40,9 @@ public class Cells : MonoBehaviour {
             cells[battler.location].SetEntity(battler.entity);
         }
     }
+
+    public void SetSelected(Battler battler, bool selected)
+    {
+        cells[battler.location].SetSelected(selected);
+    }
 }

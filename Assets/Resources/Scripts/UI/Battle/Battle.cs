@@ -33,11 +33,10 @@ public class Battle : MonoBehaviour {
         currentFighters = currentFighters[0].SortBySpeed(currentFighters);
         order.setOrder(currentFighters);
         cells.ShowSprites(currentFighters);
-        triangle.SetActive(true);
-        moveTriangle(currentFighters[0]);
-        //updateSelected(currentFighters[0]);
-        //card.selected = currentFighters[0].entity;
-        //card.Reset();
+        cells.SetSelected(currentFighters[0], true);
+        updateSelected(currentFighters[0]);
+        card.selected = currentFighters[0].entity;
+        card.Reset();
 
         //if (currentFighters[0].entity.isPlayerControlled) playerTurn(currentFighters[0]);
         //else enemyTurn(currentFighters[0]);
@@ -45,6 +44,7 @@ public class Battle : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
     }
 
     private List<Battler> getFighters()
@@ -74,16 +74,6 @@ public class Battle : MonoBehaviour {
             head.GetComponent<SpriteRenderer>().sprite = sprite;
             j++;
         }
-    }
-
-    private void moveTriangle(Battler currentFighter)
-    {
-        RectTransform transform = cells.cells[currentFighter.location].cellSprite.GetComponent<RectTransform>();
-        Vector3 location = transform.position;
-        float xOffset = transform.rect.width / 1.5f;
-        float yOffset = transform.rect.height / 2.5f;
-        Vector3 triangleLoc = triangle.GetComponent<RectTransform>().localPosition;
-        triangle.GetComponent<RectTransform>().localPosition = new Vector3(-location.x + xOffset, location.y + yOffset, triangleLoc.z);
     }
 
     private void updateSelected(Battler currentFighter)
