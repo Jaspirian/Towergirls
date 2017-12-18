@@ -105,12 +105,12 @@ public class Battle : MonoBehaviour {
 
     }
 
-    private void playWin()
+    private void Win()
     {
 
     }
 
-    private void playLoss()
+    private void Lose()
     {
 
     }
@@ -125,42 +125,30 @@ public class Battle : MonoBehaviour {
         displayHeads(currentFighters);
     }
 
-    public void ButtonClicked(string button)
+    public void Target(Cell cell)
     {
-        if (button == "Melee")
-        {
-
-        }
-        else if (button == "Spells")
-        {
-
-        }
-        else if (button == "Items") 
-        {
-
-        }
-    }
-
-    public void clicked(Battler battler)
-    {
-        if (battler == null) return;
+        Debug.Log("selecting");
         if (melee.isOn)
         {
-            attack(currentFighters[0].entity, battler);
+            if (cell.entity != null)
+            {
+                Debug.Log("meleeing");
+                Attack(currentFighters[0], cell);
+            }
         }
         else if (spells.isOn)
         {
 
         }
-        else if (items.isOn)
+        else if (items.isOn) 
         {
 
         }
     }
 
-    public void attack(Entity attacker, Battler defender)
+    public void Attack(Battler attacker, Cell defender)
     {
-        int damage = attacker.stats.attack.getCurrent();
+        int damage = attacker.entity.stats.attack.getCurrent();
         damage = (int)(damage * (defender.entity.stats.defense.getCurrent() / 100));
         defender.entity.stats.health.add(-damage);
         if (defender.entity.stats.health.getCurrent() <= 0)
@@ -169,8 +157,18 @@ public class Battle : MonoBehaviour {
         }
     }
 
-    public void death(Battler dying)
+    public void death(Battler dying, Entity killer)
     {
-
+        dying.Die(killer);
+        currentFighters.Remove(dying);
+        int controlled = 0;
+        int uncontrolled = 0;
+        foreach (Battler battler in currentFighters)
+        {
+            if (battler.entity.isPlayerControlled) controlled++;
+            if (!battler.entity.isPlayerControlled) uncontrolled++;
+        }
+        if (controlled == 0) Lose();
+        if (uncontrolled == 0) Win();
     }
 }

@@ -26,4 +26,9 @@ public class Battler {
 
         return list;
     }
+
+    public void Die(Entity killer)
+    {
+
+    }
 }

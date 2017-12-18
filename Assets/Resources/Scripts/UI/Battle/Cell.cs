@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class Cell : MonoBehaviour {
 
+    public Battle battle;
+
     public Entity entity;
+    public Vector3 location;
 
     public GameObject bottoms;
 
@@ -21,7 +24,7 @@ public class Cell : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        cellBase.GetComponent<Button>().onClick.AddListener(Target);
 	}
 	
 	// Update is called once per frame
@@ -60,5 +63,10 @@ public class Cell : MonoBehaviour {
     public void SetClickable(bool clickable)
     {
         cellBase.GetComponent<Button>().interactable = clickable;
+    }
+
+    public void Target()
+    {
+        battle.Target(this);
     }
 }

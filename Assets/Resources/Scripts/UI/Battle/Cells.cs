@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class Cells : MonoBehaviour {
 
     public Dictionary<Vector3, Cell> cells;
+    public Battle battle;
 
 	// Use this for initialization
 	void Start () {
+        battle = GameObject.Find("Canvas/Battle").GetComponent<Battle>();
         cells = new Dictionary<Vector3, Cell>();
         for (int side = 0; side < 2; side++) 
         {
@@ -17,7 +19,10 @@ public class Cells : MonoBehaviour {
                 for (int row = 0; row < 3; row++) 
                 {
                     string location = "/Canvas/Battle/Cells/" + side + "/" + column + "/" + row + "/";
-                    cells.Add(new Vector3(side, column, row), GameObject.Find(location).GetComponent<Cell>());
+                    Cell cell = GameObject.Find(location).GetComponent<Cell>();
+                    cell.location = new Vector3(side, column, row);
+                    cell.battle = battle;
+                    cells.Add(cell.location, cell);
                 }
             }
         }
@@ -36,8 +41,9 @@ public class Cells : MonoBehaviour {
         }
         foreach (Battler battler in battlers)
         {
-            cells[battler.location].SetActive(true);
-            cells[battler.location].SetEntity(battler.entity);
+            Cell cell = cells[battler.location];
+            cell.SetActive(true);
+            cell.SetEntity(battler.entity);
         }
     }
 
