@@ -20,6 +20,6 @@ public class FightButton : MonoBehaviour {
 
     private void click(bool currentState)
     {
-        cells.setClickable(currentState);
+        cells.SetClickable(currentState);
     }
 }

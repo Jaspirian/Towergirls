@@ -16,7 +16,7 @@ public class Order : MonoBehaviour {
 		
 	}
 
-    public void setOrder(List<Battler> order)
+    public void SetOrder(List<Battler> order)
     {
         int j = 0;
         for (int i=0; i<images.Length; i++, j++)

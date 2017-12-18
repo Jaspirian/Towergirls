@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Battle : MonoBehaviour {
@@ -10,7 +11,7 @@ public class Battle : MonoBehaviour {
     private List<Battler> initialFighters;
     private List<Battler> currentFighters;
 
-    public GameObject triangle;
+    public EventSystem eventSystem;
 
     private Card card;
     private Order order;
@@ -22,24 +23,35 @@ public class Battle : MonoBehaviour {
     public Toggle spells;
     public Toggle items;
 
+    public Speaker speaker;
+
     // Use this for initialization
     void Start() {
         card = GameObject.Find("Canvas/Right/Card").GetComponent<Card>();
         order = GameObject.Find("Canvas/Battle/Order").GetComponent<Order>();
         cells = GameObject.Find("Canvas/Battle/Cells").GetComponent<Cells>();
+        speaker = GameObject.Find("Canvas/Bottom/Speaker").GetComponent<Speaker>();
         
         initialFighters = getFighters();
         currentFighters = getFighters();
+        foreach (Battler battler in currentFighters)
+        {
+            battler.cell.cellBase.GetComponent<Button>().onClick.AddListener(delegate ()
+            {
+                Target(battler);
+            });
+        }
         currentFighters = currentFighters[0].SortBySpeed(currentFighters);
-        order.setOrder(currentFighters);
-        cells.ShowSprites(currentFighters);
-        cells.SetSelected(currentFighters[0], true);
-        updateSelected(currentFighters[0]);
-        card.selected = currentFighters[0].entity;
-        card.Reset();
 
-        //if (currentFighters[0].entity.isPlayerControlled) playerTurn(currentFighters[0]);
-        //else enemyTurn(currentFighters[0]);
+        order.SetOrder(currentFighters);
+
+        cells.SetVisible(false);
+        foreach (Battler battler in currentFighters)
+        {
+            battler.SetVisible(true);
+        }
+
+        NextTurn(false);
     }
 
     // Update is called once per frame
@@ -51,45 +63,21 @@ public class Battle : MonoBehaviour {
     {
         List<Battler> temp = new List<Battler>();
         //THIS IS PLACEHOLDER STUFF
-        temp.Add(new Battler(new Knight("Sir Knight", true), new Vector3(0, 1, 1)));
-        temp.Add(new Battler(new Enemy("Bandit Male", false), new Vector3(1, 0, 0)));
-        temp.Add(new Battler(new Enemy("Bandit Spike", true), new Vector3(1, 1, 1)));
-        temp.Add(new Battler(new Enemy("Bandit Female", true), new Vector3(1, 0, 2)));
+        temp.Add(new Battler(new Knight("Sir Knight", true), new Vector3(0, 1, 1), cells.cells[new Vector3(0, 1, 1)]));
+        temp.Add(new Battler(new Enemy("Bandit Male", false), new Vector3(1, 0, 0), cells.cells[new Vector3(1, 0, 0)]));
+        temp.Add(new Battler(new Enemy("Bandit Spike", false), new Vector3(1, 1, 1), cells.cells[new Vector3(1, 1, 1)]));
+        temp.Add(new Battler(new Enemy("Bandit Female", false), new Vector3(1, 0, 2), cells.cells[new Vector3(1, 0, 2)]));
         //
         return temp;
     }
 
-    private void displayHeads(List<Battler> order)
+    private void PlayerTurn(Battler battler)
     {
-        int j = 0;
-        for(int i=0; i<NUM_DISPLAYED; i++)
-        {
-            GameObject head = GameObject.Find("/Battle/Turn order/" + (i + 1));
-            //Debug.Log(head);
-            Sprite sprite = null;
-            if (j >= order.Count) j = 0;
-            //Debug.Log(j);
-            sprite = order[j].entity.sprite;
-            //Debug.Log(sprite);
-            head.GetComponent<SpriteRenderer>().sprite = sprite;
-            j++;
-        }
+        eventSystem.enabled = true;
+        ShowChoices(battler);
     }
 
-    private void updateSelected(Battler currentFighter)
-    {
-        GameObject.Find("Canvas/Bottom/Character/Avatar").GetComponent<Image>().sprite = currentFighter.entity.sprite;
-        GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().text = currentFighter.entity.title;
-        GameObject.Find("Canvas/Bottom/Character/Name").GetComponent<Text>().color = currentFighter.entity.color;
-    }
-
-    private void playerTurn(Battler battler)
-    {
-        showChoices(battler);
-
-    }
-
-    private void showChoices(Battler currentFighter)
+    private void ShowChoices(Battler currentFighter)
     {
         dialogueLayout.SetActive(false);
         fightLayout.SetActive(true);
@@ -100,9 +88,12 @@ public class Battle : MonoBehaviour {
         else fightLayout.transform.Find("Buttons/Items").GetComponent<Toggle>().interactable = false;
     }
 
-    private void enemyTurn(Battler currentFighter)
+    private IEnumerator EnemyTurn(Battler currentFighter)
     {
-
+        eventSystem.enabled = false;
+        Debug.Log("hi");
+        yield return new WaitForSeconds(3);
+        NextTurn(true);
     }
 
     private void Win()
@@ -116,24 +107,48 @@ public class Battle : MonoBehaviour {
     }
 
 
-    private void nextTurn()
+    private void NextTurn(bool increment)
     {
-        Battler justWent = currentFighters[0];
-        currentFighters.RemoveAt(0);
-        currentFighters.Add(justWent);
+        melee.isOn = false;
+        spells.isOn = false;
+        items.isOn = false;
+        cells.ClearHighlight();
 
-        displayHeads(currentFighters);
+        if (increment)
+        {
+            Battler justWent = currentFighters[0];
+            currentFighters.RemoveAt(0);
+            currentFighters.Add(justWent);
+            justWent.SetSelected(false);
+            order.SetOrder(currentFighters);
+        }
+
+        currentFighters[0].SetSelected(true);
+
+        speaker.SetEntity(currentFighters[0].entity);
+
+        card.SetSelected(currentFighters[0].entity);
+
+        if (currentFighters[0].entity.isPlayerControlled)
+        {
+            PlayerTurn(currentFighters[0]);
+        }
+        else
+        {
+            Debug.Log("enemy!");
+            StartCoroutine(EnemyTurn(currentFighters[0]));
+        }
     }
 
-    public void Target(Cell cell)
+    public void Target(Battler targeted)
     {
         Debug.Log("selecting");
         if (melee.isOn)
         {
-            if (cell.entity != null)
+            if (targeted.entity != null)
             {
                 Debug.Log("meleeing");
-                Attack(currentFighters[0], cell);
+                Attack(currentFighters[0], targeted);
             }
         }
         else if (spells.isOn)
@@ -146,18 +161,25 @@ public class Battle : MonoBehaviour {
         }
     }
 
-    public void Attack(Battler attacker, Cell defender)
+    public void Attack(Battler attacker, Battler defender)
     {
         int damage = attacker.entity.stats.attack.getCurrent();
-        damage = (int)(damage * (defender.entity.stats.defense.getCurrent() / 100));
-        defender.entity.stats.health.add(-damage);
-        if (defender.entity.stats.health.getCurrent() <= 0)
+        Debug.Log("Damage before mod: " + damage);
+        int defense = defender.entity.stats.defense.getCurrent();
+        float defensePercent = (float)defense / 100;
+        damage = (int)(damage * (1 - defensePercent));
+        Debug.Log("Damage after mod: " + damage);
+        if (defender.ChangeHealth(-damage))
         {
-            death(defender);
+            Death(defender, attacker);
+        }
+        else
+        {
+            NextTurn(true);
         }
     }
 
-    public void death(Battler dying, Entity killer)
+    public void Death(Battler dying, Battler killer)
     {
         dying.Die(killer);
         currentFighters.Remove(dying);

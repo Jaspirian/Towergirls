@@ -22,6 +22,17 @@ public class Card : MonoBehaviour {
 
     }
 
+    public void SetSelected(Entity e)
+    {
+        selected = e;
+        UpdateCard(e);
+    }
+
+    public void TempShow(Entity e)
+    {
+        UpdateCard(e);
+    }
+
     public void Reset()
     {
         UpdateCard(selected);

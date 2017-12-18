@@ -5,11 +5,6 @@ using UnityEngine.UI;
 
 public class Cell : MonoBehaviour {
 
-    public Battle battle;
-
-    public Entity entity;
-    public Vector3 location;
-
     public GameObject bottoms;
 
     public GameObject cellBase;
@@ -24,7 +19,7 @@ public class Cell : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        cellBase.GetComponent<Button>().onClick.AddListener(Target);
+
 	}
 	
 	// Update is called once per frame
@@ -32,7 +27,13 @@ public class Cell : MonoBehaviour {
 		
 	}
 
-    public void SetActive(bool visible)
+    public void SetEntity(Entity e)
+    {
+        cellSprite.GetComponent<Image>().sprite = e.sprite;
+        //something with health
+    }
+
+    public void SetVisible(bool visible)
     {
         healthBar.SetActive(visible);
         cellSprite.SetActive(visible);
@@ -45,28 +46,18 @@ public class Cell : MonoBehaviour {
         triangle.SetActive(selected);
     }
 
-    public void SetEntity(Entity entity)
-    {
-        this.entity = entity;
-        cellBase.GetComponent<CellBase>().entity = entity;
-        cellSprite.GetComponent<Image>().sprite = entity.sprite;
-    }
-
-    public void ChangeHealthBar(float percent)
-    {
-        Rect rect = greenHealth.GetComponent<RectTransform>().rect;
-        float height = rect.height;
-        height *= percent;
-        rect.Set(rect.x, rect.y, rect.width, height); //hack fix
-    }
-
     public void SetClickable(bool clickable)
     {
         cellBase.GetComponent<Button>().interactable = clickable;
     }
 
-    public void Target()
+    public void UpdateHealthBar(float percentHealth)
     {
-        battle.Target(this);
+        Debug.Log("DAMAGED to " + percentHealth);
+        //Rect green = greenHealth.transform.GetComponent<RectTransform>().rect;
+        Rect container = healthBar.transform.GetComponent<RectTransform>().rect;
+        //green.Set(green.x, container.height * (1 - percentHealth), green.width, green.height);
+        //Debug.Log(green.x + "," + green.y + "," + green.width + "," + green.height);
+        greenHealth.GetComponent<RectTransform>().offsetMax = new Vector2(greenHealth.GetComponent<RectTransform>().offsetMax.x, -(container.height * (1 - percentHealth)));
     }
 }

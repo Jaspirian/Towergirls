@@ -9964,8 +9964,9 @@ GameObject:
   - component: {fileID: 1417010151}
   - component: {fileID: 1417010153}
   - component: {fileID: 1417010152}
+  - component: {fileID: 1417010154}
   m_Layer: 5
-  m_Name: Character
+  m_Name: Speaker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10027,6 +10028,19 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1417010150}
+--- !u!114 &1417010154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1417010150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58afef1c197e1864686fbbe9997636e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avatar: {fileID: 355188633}
+  title: {fileID: 1156023051}
 --- !u!1 &1417340794
 GameObject:
   m_ObjectHideFlags: 0
@@ -14095,7 +14109,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1887490155}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -14921,12 +14935,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f9eb2f04462fa41865accb3303bc9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triangle: {fileID: 0}
+  eventSystem: {fileID: 1887490158}
   dialogueLayout: {fileID: 1492004759}
   fightLayout: {fileID: 430027397}
   melee: {fileID: 349246790}
   spells: {fileID: 1537714422}
   items: {fileID: 1306616313}
+  speaker: {fileID: 0}
 --- !u!1 &1934216595
 GameObject:
   m_ObjectHideFlags: 0
