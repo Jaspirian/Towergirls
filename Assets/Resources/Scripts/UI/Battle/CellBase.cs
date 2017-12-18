@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CellBase : MonoBehaviour, IPointerEnterHandler {
+public class CellBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public Entity entity;
     private Card card;
 

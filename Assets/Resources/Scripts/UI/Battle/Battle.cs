@@ -125,6 +125,22 @@ public class Battle : MonoBehaviour {
         displayHeads(currentFighters);
     }
 
+    public void ButtonClicked(string button)
+    {
+        if (button == "Melee")
+        {
+
+        }
+        else if (button == "Spells")
+        {
+
+        }
+        else if (button == "Items") 
+        {
+
+        }
+    }
+
     public void clicked(Battler battler)
     {
         if (battler == null) return;

@@ -45,4 +45,12 @@ public class Cells : MonoBehaviour {
     {
         cells[battler.location].SetSelected(selected);
     }
+
+    public void setClickable(bool clickable)
+    {
+        foreach (KeyValuePair<Vector3, Cell> entry in cells)
+        {
+            entry.Value.SetClickable(clickable);
+        }
+    }
 }

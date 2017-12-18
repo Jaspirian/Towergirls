@@ -33,7 +33,8 @@ public class Cell : MonoBehaviour {
     {
         healthBar.SetActive(visible);
         cellSprite.SetActive(visible);
-        cellBase.GetComponent<Button>().interactable = visible;
+        if(!visible) SetClickable(false);
+        cellBase.GetComponent<CellBase>().enabled = visible;
     }
 
     public void SetSelected(bool selected)
@@ -54,5 +55,10 @@ public class Cell : MonoBehaviour {
         float height = rect.height;
         height *= percent;
         rect.Set(rect.x, rect.y, rect.width, height); //hack fix
+    }
+
+    public void SetClickable(bool clickable)
+    {
+        cellBase.GetComponent<Button>().interactable = clickable;
     }
 }
