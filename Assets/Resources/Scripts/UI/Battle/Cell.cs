@@ -49,6 +49,7 @@ public class Cell : MonoBehaviour {
     public void SetClickable(bool clickable)
     {
         cellBase.GetComponent<Button>().interactable = true;
+        //cellBase.GetComponent<Button>().interactable = clickable;
     }
 
     public void UpdateHealthBar(float percentHealth)

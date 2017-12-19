@@ -89,7 +89,6 @@ public class Battle : MonoBehaviour {
 
     private IEnumerator EnemyTurn(Battler currentFighter)
     {
-        eventSystem.enabled = false;
         yield return new WaitForSeconds(2);
         melee.GetComponent<Toggle>().isOn = true;
         yield return new WaitForSeconds(2);
@@ -115,7 +114,6 @@ public class Battle : MonoBehaviour {
         melee.isOn = false;
         spells.isOn = false;
         items.isOn = false;
-        cells.ClearHighlight();
 
         if (increment)
         {
@@ -148,11 +146,16 @@ public class Battle : MonoBehaviour {
 
     public void Target(Battler targeted)
     {
+        targeted.cell.cellBase.GetComponent<Button>().OnDeselect(null);
+        EventSystem.current.SetSelectedGameObject(null);
+        Cursor.visible = false;
+        eventSystem.enabled = false;
+
         if (melee.isOn)
         {
             if (targeted.entity != null)
             {
-                Attack(currentFighters[0], targeted);
+                //Attack(currentFighters[0], targeted);
             }
         }
         else if (spells.isOn)
@@ -177,7 +180,7 @@ public class Battle : MonoBehaviour {
         }
         else
         {
-            NextTurn(true);
+           //NextTurn(true);
         }
     }
 

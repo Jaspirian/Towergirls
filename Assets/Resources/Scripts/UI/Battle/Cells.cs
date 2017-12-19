@@ -46,14 +46,4 @@ public class Cells : MonoBehaviour {
             entry.Value.SetVisible(visible);
         }
     }
-
-    public void ClearHighlight()
-    {
-        foreach (KeyValuePair<Vector3, Cell> entry in cells)
-        {
-            entry.Value.SetClicked(false);
-        }
-        Selection.activeGameObject = null;
-        
-    }
 }
