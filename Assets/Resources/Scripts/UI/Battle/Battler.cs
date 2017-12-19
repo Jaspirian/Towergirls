@@ -45,7 +45,6 @@ public class Battler {
 
     public bool ChangeHealth(int addition)
     {
-        Debug.Log("DAMAGE: " + addition);
         entity.stats.health.add(addition);
         float percentHealth = (float)entity.stats.health.getCurrent() / (float)entity.stats.health.initialValue;
         cell.UpdateHealthBar(percentHealth);
@@ -56,5 +55,10 @@ public class Battler {
     public void Die(Battler killer)
     {
 
+    }
+
+    public void Click()
+    {
+        cell.cellBase.GetComponent<Button>().onClick.Invoke();
     }
 }

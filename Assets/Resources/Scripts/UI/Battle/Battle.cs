@@ -74,7 +74,6 @@ public class Battle : MonoBehaviour {
     private void PlayerTurn(Battler battler)
     {
         eventSystem.enabled = true;
-        ShowChoices(battler);
     }
 
     private void ShowChoices(Battler currentFighter)
@@ -91,9 +90,13 @@ public class Battle : MonoBehaviour {
     private IEnumerator EnemyTurn(Battler currentFighter)
     {
         eventSystem.enabled = false;
-        Debug.Log("hi");
-        yield return new WaitForSeconds(3);
-        NextTurn(true);
+        yield return new WaitForSeconds(2);
+        melee.GetComponent<Toggle>().isOn = true;
+        yield return new WaitForSeconds(2);
+        List<Battler> options = new List<Battler>();
+        foreach (Battler battler in currentFighters) if (battler.entity.isPlayerControlled) options.Add(battler);
+        Battler target = options[Random.Range(0, options.Count - 1)];
+        target.Click();
     }
 
     private void Win()
@@ -123,11 +126,15 @@ public class Battle : MonoBehaviour {
             order.SetOrder(currentFighters);
         }
 
+        Debug.Log(currentFighters[0].entity.title + "'s turn.");
+
         currentFighters[0].SetSelected(true);
 
         speaker.SetEntity(currentFighters[0].entity);
 
         card.SetSelected(currentFighters[0].entity);
+
+        ShowChoices(currentFighters[0]);
 
         if (currentFighters[0].entity.isPlayerControlled)
         {
@@ -135,19 +142,16 @@ public class Battle : MonoBehaviour {
         }
         else
         {
-            Debug.Log("enemy!");
             StartCoroutine(EnemyTurn(currentFighters[0]));
         }
     }
 
     public void Target(Battler targeted)
     {
-        Debug.Log("selecting");
         if (melee.isOn)
         {
             if (targeted.entity != null)
             {
-                Debug.Log("meleeing");
                 Attack(currentFighters[0], targeted);
             }
         }
@@ -164,11 +168,9 @@ public class Battle : MonoBehaviour {
     public void Attack(Battler attacker, Battler defender)
     {
         int damage = attacker.entity.stats.attack.getCurrent();
-        Debug.Log("Damage before mod: " + damage);
         int defense = defender.entity.stats.defense.getCurrent();
         float defensePercent = (float)defense / 100;
         damage = (int)(damage * (1 - defensePercent));
-        Debug.Log("Damage after mod: " + damage);
         if (defender.ChangeHealth(-damage))
         {
             Death(defender, attacker);

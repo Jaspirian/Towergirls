@@ -49,6 +49,11 @@ public class Cells : MonoBehaviour {
 
     public void ClearHighlight()
     {
+        foreach (KeyValuePair<Vector3, Cell> entry in cells)
+        {
+            entry.Value.SetClicked(false);
+        }
         Selection.activeGameObject = null;
+        
     }
 }

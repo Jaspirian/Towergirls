@@ -48,7 +48,7 @@ public class Cell : MonoBehaviour {
 
     public void SetClickable(bool clickable)
     {
-        cellBase.GetComponent<Button>().interactable = clickable;
+        cellBase.GetComponent<Button>().interactable = true;
     }
 
     public void UpdateHealthBar(float percentHealth)
@@ -59,5 +59,10 @@ public class Cell : MonoBehaviour {
         //green.Set(green.x, container.height * (1 - percentHealth), green.width, green.height);
         //Debug.Log(green.x + "," + green.y + "," + green.width + "," + green.height);
         greenHealth.GetComponent<RectTransform>().offsetMax = new Vector2(greenHealth.GetComponent<RectTransform>().offsetMax.x, -(container.height * (1 - percentHealth)));
+    }
+
+    public void SetClicked(bool clicked)
+    {
+        
     }
 }
